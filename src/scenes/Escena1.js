@@ -6,13 +6,22 @@ class Escena1 extends Phaser.Scene{
     }
     preload(){
         this.load.image('cielo','public/resource/image/Espacio.jpg'),
-        this.load.image('nave','public/resource/image/nave1.png')
+        this.load.image('nave','public/resource/image/nave1.png'),
+        this.load.image('meteoro','public/resource/image/asteroide.png')
     }
     create(){
         this.add.image(400,300,'cielo');
         this.jugador = this.physics.add.sprite(400,550,'nave');
         this.jugador.setCollideWorldBounds(true);
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.grupoMeteoros = this.physics.add.group();
+        this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
+    }
+    generarMeteoros() {
+        const x = Phaser.Math.Between(0, 800); 
+        const meteoro = this.grupoMeteoros.create(x, 0, 'meteoro');
+        meteoro.setVelocityY(200); 
     }
     update(){
         this.jugador.setVelocityX(0);
