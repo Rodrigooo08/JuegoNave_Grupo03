@@ -50,6 +50,7 @@ class Escena1 extends Phaser.Scene{
     }
     gameOver(jugador,meteoro){
         this.scene.start('GameOver');
+        this.scene.start('GameOver',{puntaje: this.puntaje});
     }
 }
 export default Escena1;
