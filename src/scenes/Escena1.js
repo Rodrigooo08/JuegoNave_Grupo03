@@ -3,6 +3,8 @@ class Escena1 extends Phaser.Scene{
         super("Escena1");
         this.jugador=null;
         this.cursors=null;
+        this.puntaje = 0;
+        this.textoPuntaje='';
     }
     preload(){
         this.load.image('cielo','public/resource/image/Espacio.jpg'),
@@ -17,6 +19,8 @@ class Escena1 extends Phaser.Scene{
 
         this.grupoMeteoros = this.physics.add.group();
         this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
+
+        this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
@@ -35,6 +39,9 @@ class Escena1 extends Phaser.Scene{
             } else if (this.cursors.down.isDown){ //mover hacia atras
                 this.jugador.setVelocityY(300);
             }
+            
+        this.puntaje +=1;
+        this.textoPuntaje.setText('Puntaje: '+this.puntaje);
     }
 }
 export default Escena1;
