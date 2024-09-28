@@ -25,10 +25,15 @@ class Escena1 extends Phaser.Scene{
     }
     update(){
         this.jugador.setVelocityX(0);
+        this.jugador.setVelocityY(0);
         if (this.cursors.left.isDown) {
             this.jugador.setVelocityX(-300); // Mover a la izquierda
             } else if (this.cursors.right.isDown) {
             this.jugador.setVelocityX(300); // Mover a la derecha
+            } else if (this.cursors.up.isDown){ //mover hacia adelante
+                this.jugador.setVelocityY(-300);
+            } else if (this.cursors.down.isDown){ //mover hacia atras
+                this.jugador.setVelocityY(300);
             }
     }
 }
