@@ -12,15 +12,20 @@ class Escena1 extends Phaser.Scene{
         this.load.image('meteoro','public/resource/image/asteroide.png')
     }
     create(){
+        //fondo escena
         this.add.image(400,300,'cielo');
+        //jugador
         this.jugador = this.physics.add.sprite(400,550,'nave');
         this.jugador.setCollideWorldBounds(true);
         this.cursors = this.input.keyboard.createCursorKeys();
-
+        //meteoros
         this.grupoMeteoros = this.physics.add.group();
         this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
-
+        //puntaje
+        this.puntaje=0;
         this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
+        //collider
+        this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
@@ -42,6 +47,9 @@ class Escena1 extends Phaser.Scene{
             
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
+    }
+    gameOver(jugador,meteoro){
+        this.scene.start('GameOver');
     }
 }
 export default Escena1;
