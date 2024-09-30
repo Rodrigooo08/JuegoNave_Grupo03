@@ -10,6 +10,27 @@ class Escena3 extends Phaser.Scene{
         this.puntaje=data.puntaje;
         this.balasRecolectadas=data.balasRecolectadas;
     }
+    dispararBala(){
+        if(this.balasRecolectadas == 0){
+            this.gameOver(this.jugador);
+        }
+        if(this.balasRecolectadas>0){
+            let bala = this.balas.get(this.jugador.x,this.jugador.y,'bala');
+            if(bala){
+                bala.setActive(true);
+                bala.setVisible(true);
+                bala.body.reset(this.jugador.x,this.jugador.y);
+                bala.body.enable=true;
+                bala.setVelocityY(-400);
+            }
+            this.balasRecolectadas--;
+            this.textoBalas.setText('Balas: '+this.balasRecolectadas);
+        }
+    }
+    destruirAsteroide(bala,asteroide){
+        asteroide.disableBody(true,true);
+        bala.disableBody(true,true);
+    }
     preload(){
         this.load.image('cielo3','public/resource/image/Espacio.png'),
         this.load.image('nave','public/resource/image/nave1.png'),
@@ -22,7 +43,9 @@ class Escena3 extends Phaser.Scene{
         this.add.image(400,300,'cielo3').setDisplaySize(this.scale.width, this.scale.height);
         this.jugador = this.physics.add.sprite(400,550,'nave');
         this.jugador.setCollideWorldBounds(true);
+        //controles
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.barraEspaciadora = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         //meteoros
         this.grupoMeteoros = this.physics.add.group();
         this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
@@ -30,6 +53,10 @@ class Escena3 extends Phaser.Scene{
         this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
         //collider
         this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
+        //balas
+        this.balas = this.physics.add.group();
+        this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
+        this.textoBalas = this.add.text(16,50,'Balas: '+this.balasRecolectadas,{ fontSize: '32px', fill: '#F5EFFF' });
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
@@ -53,7 +80,9 @@ class Escena3 extends Phaser.Scene{
             } else if (this.cursors.down.isDown){ //mover hacia atras
                 this.jugador.setVelocityY(300);
             }
-            
+        if(Phaser.Input.Keyboard.JustDown(this.barraEspaciadora)){
+            this.dispararBala();
+        }
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
     }
