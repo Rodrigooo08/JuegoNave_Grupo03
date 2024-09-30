@@ -6,11 +6,14 @@ class Escena3 extends Phaser.Scene{
         this.puntaje = 0;
         this.textoPuntaje='';
     }
+    init(data){
+        this.puntaje=data.puntaje;
+        this.balasRecolectadas=data.balasRecolectadas;
+    }
     preload(){
         this.load.image('cielo3','public/resource/image/Espacio.png'),
         this.load.image('nave','public/resource/image/nave1.png'),
-        this.load.image('meteoro3','public/resource/image/basura_espacial2d_1_300x250.png')
-        this.load.image("meteoro4",'public/resource/image/basura_espacial2d_2_400x250.png')
+        this.load.image('meteoro3','public/resource/image/Basurita_espacial2.png')
     }
     create(){
         //fondo escena
@@ -23,7 +26,6 @@ class Escena3 extends Phaser.Scene{
         this.grupoMeteoros = this.physics.add.group();
         this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
         //puntaje
-        this.puntaje=0;
         this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
         //collider
         this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
@@ -31,8 +33,7 @@ class Escena3 extends Phaser.Scene{
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
         const meteoro = this.grupoMeteoros.create(x, 0, 'meteoro3');
-        this.grupoMeteoros.create(x, 0, 'meteoro4');
-        meteoro.setVelocityY(200); 
+        meteoro.setVelocityY(250); 
     }
     update(){
         this.jugador.setVelocityX(0);
