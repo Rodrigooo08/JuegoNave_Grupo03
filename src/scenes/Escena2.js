@@ -15,7 +15,7 @@ class Escena2 extends Phaser.Scene{
     recolertarBala(jugador,bala){
         bala.disableBody(true, true);  // Eliminar la bala del mapa
         this.balasRecolectadas++;
-        this.textoBalas.setText('Balas: ' + this.balasRecolectadas);     
+        this.textoBalas.setText('Balas Recolectadas: ' + this.balasRecolectadas);     
     }
     preload(){
         this.load.image('cielo2','public/resource/image/gamenave.png'),
@@ -42,7 +42,7 @@ class Escena2 extends Phaser.Scene{
         this.balas = this.physics.add.group(); // Creando el grupo de meteoritos
         this.time.addEvent({ delay: 1000, callback: this.generarBalas, callbackScope: this, loop: true });
         this.balasRecolectadas=0; // resetea el contador de balas, cada vez que si inicia la escena
-        this.textoBalas = this.add.text(16,50,'Balas: 0',{ fontSize: '32px', fill: '#F5EFFF' });
+        this.textoBalas = this.add.text(16,50,'Balas Recoletadas: 0',{ fontSize: '32px', fill: '#F5EFFF' });
         //deteccion de colicion con balas
         this.physics.add.overlap(this.jugador, this.balas, this.recolertarBala, null, this);
     }

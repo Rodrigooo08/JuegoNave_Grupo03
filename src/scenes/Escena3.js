@@ -12,7 +12,7 @@ class Escena3 extends Phaser.Scene{
     }
     dispararBala(){
         if(this.balasRecolectadas == 0){
-            this.gameOver(this.jugador);
+            this.textoBalas.setText('Sin Municion');
         }
         if(this.balasRecolectadas>0){
             let bala = this.balas.get(this.jugador.x,this.jugador.y,'bala');
@@ -65,7 +65,7 @@ class Escena3 extends Phaser.Scene{
         const tipoMeteoro = tipoMeteoros[Phaser.Math.Between(0, tipoMeteoros.length -1)];
         const meteoro = this.grupoMeteoros.create(x,0,tipoMeteoro);
         // Velocidad de meteoros aleatoria
-        const velocidadY = Phaser.Math.Between(50,120);
+        const velocidadY = Phaser.Math.Between(90,150);
         meteoro.setVelocityY(velocidadY);
     }
     update(){
