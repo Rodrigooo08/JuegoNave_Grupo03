@@ -48,8 +48,13 @@ class Escena1 extends Phaser.Scene{
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
         
-        if (this.puntaje >= 600) {
-            this.scene.start('Escena2', { puntaje: this.puntaje });
+        // if (this.puntaje >= 600) {
+        //     this.scene.start('Escena2', { puntaje: this.puntaje });
+        // }
+        //Verifica el cambio de escena segun el puntaje
+        if (this.puntaje >= 800) {
+            this.scene.stop('Escena1'); 
+            this.scene.start('Escena2', { puntaje: this.puntaje }); /
         }
 
     
