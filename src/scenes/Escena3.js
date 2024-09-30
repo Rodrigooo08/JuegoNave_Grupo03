@@ -19,6 +19,8 @@ class Escena3 extends Phaser.Scene{
             if(bala){
                 bala.setActive(true);
                 bala.setVisible(true);
+                bala.body.reset(this.jugador.x,this.jugador.y);
+                bala.body.enable=true;
                 bala.setVelocityY(-400);
             }
             this.balasRecolectadas--;
