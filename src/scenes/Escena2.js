@@ -1,15 +1,27 @@
 class Escena2 extends Phaser.Scene{
     constructor(){
         super("Escena2");
-        this.jugador=null;
-        this.cursors=null;
-        this.puntaje = 0;
-        this.textoPuntaje='';
+        this.textoBalas='';
+        this.balasRecolectadas=0;
+    }
+    init(data){
+        this.puntaje = data.puntaje;
+    }
+    generarBalas(){
+        const x = Phaser.Math.Between(0, 800); // Posición aleatoria en el eje X
+        const bala = this.balas.create(x, 0, 'bala'); // Crear una bala
+        bala.setVelocityY(200); // Velocidad vertical hacia abajo
+    }
+    recolertarBala(jugador,bala){
+        bala.disableBody(true, true);  // Eliminar la bala del mapa
+        this.balasRecolectadas++;
+        this.textoBalas.setText('Balas: ' + this.balasRecolectadas);     
     }
     preload(){
         this.load.image('cielo2','public/resource/image/gamenave.png'),
         this.load.image('nave','public/resource/image/nave1.png'),
         this.load.image('meteoro2','public/resource/image/asteroide_32x32.png')
+        this.load.image('bala','public/resource/image/bala.png');
     }
     create(){
         //fondo escena
@@ -22,10 +34,17 @@ class Escena2 extends Phaser.Scene{
         this.grupoMeteoros = this.physics.add.group();
         this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
         //puntaje
-        this.puntaje=0;
+        //this.puntaje=0;
         this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
         //collider
         this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
+        //balas
+        this.balas = this.physics.add.group(); // Creando el grupo de meteoritos
+        this.time.addEvent({ delay: 1000, callback: this.generarBalas, callbackScope: this, loop: true });
+        this.balasRecolectadas=0; // resetea el contador de balas, cada vez que si inicia la escena
+        this.textoBalas = this.add.text(16,50,'Balas: 0',{ fontSize: '32px', fill: '#F5EFFF' });
+        //deteccion de colicion con balas
+        this.physics.add.overlap(this.jugador, this.balas, this.recolertarBala, null, this);
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
@@ -47,7 +66,12 @@ class Escena2 extends Phaser.Scene{
             
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
+        //condicion para pasar de escena
+        /*if(this.puntaje >= 1500){
+            this.scene.start('Escene3',{puntaje:this.puntaje,balasReceolectadas: this.balasRecolectadas});
+        }*/
     }
+
     gameOver(jugador,meteoro){
         this.scene.start('GameOver');
         this.scene.start('GameOver',{puntaje: this.puntaje});
