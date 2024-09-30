@@ -1,19 +1,19 @@
-class Escena1 extends Phaser.Scene{
+class Escena2 extends Phaser.Scene{
     constructor(){
-        super("Escena1");
+        super("Escena2");
         this.jugador=null;
         this.cursors=null;
         this.puntaje = 0;
         this.textoPuntaje='';
     }
     preload(){
-        this.load.image('cielo','public/resource/image/Espacio.jpg'),
+        this.load.image('cielo2','public/resource/image/gamenave.png'),
         this.load.image('nave','public/resource/image/nave1.png'),
-        this.load.image('meteoro','public/resource/image/asteroide.png')
+        this.load.image('meteoro2','public/resource/image/asteroide_32x32.png')
     }
     create(){
         //fondo escena
-        this.add.image(400,300,'cielo');
+        this.add.image(400,300,'cielo2');
         //jugador
         this.jugador = this.physics.add.sprite(400,550,'nave');
         this.jugador.setCollideWorldBounds(true);
@@ -29,7 +29,7 @@ class Escena1 extends Phaser.Scene{
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
-        const meteoro = this.grupoMeteoros.create(x, 0, 'meteoro');
+        const meteoro = this.grupoMeteoros.create(x, 0, 'meteoro2');
         meteoro.setVelocityY(200); 
     }
     update(){
@@ -47,22 +47,10 @@ class Escena1 extends Phaser.Scene{
             
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
-        
-        // if (this.puntaje >= 600) {
-        //     this.scene.start('Escena2', { puntaje: this.puntaje });
-        // }
-        //Verifica el cambio de escena segun el puntaje
-        if (this.puntaje >= 800) {
-            this.scene.stop('Escena1'); 
-            this.scene.start('Escena2', { puntaje: this.puntaje }); /
-        }
-
-    
     }
-  
     gameOver(jugador,meteoro){
-        // this.scene.start('GameOver');
+        this.scene.start('GameOver');
         this.scene.start('GameOver',{puntaje: this.puntaje});
     }
 }
-export default Escena1;
+export default Escena2;
