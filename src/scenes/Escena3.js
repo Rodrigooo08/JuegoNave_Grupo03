@@ -14,11 +14,12 @@ class Escena3 extends Phaser.Scene{
         this.load.image('cielo3','public/resource/image/Espacio.png'),
         this.load.image('nave','public/resource/image/nave1.png'),
         this.load.image('meteoro3','public/resource/image/Basurita_espacial2.png')
+        this.load.image('meteoro4','public/resource/image/Basurita_espacial.png')
+        this.load.image('meteoro5','public/resource/image/Basurita_espacial3.png')
     }
     create(){
         //fondo escena
-        this.add.image(400,300,'cielo3');
-        //jugador
+        this.add.image(400,300,'cielo3').setDisplaySize(this.scale.width, this.scale.height);
         this.jugador = this.physics.add.sprite(400,550,'nave');
         this.jugador.setCollideWorldBounds(true);
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -32,8 +33,13 @@ class Escena3 extends Phaser.Scene{
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
-        const meteoro = this.grupoMeteoros.create(x, 0, 'meteoro3');
-        meteoro.setVelocityY(250); 
+        const tipoMeteoros = ['meteoro3','meteoro4','meteoro5'];
+        // Meteoro Aleatorios
+        const tipoMeteoro = tipoMeteoros[Phaser.Math.Between(0, tipoMeteoros.length -1)];
+        const meteoro = this.grupoMeteoros.create(x,0,tipoMeteoro);
+        // Velocidad de meteoros aleatoria
+        const velocidadY = Phaser.Math.Between(50,120);
+        meteoro.setVelocityY(velocidadY);
     }
     update(){
         this.jugador.setVelocityX(0);
