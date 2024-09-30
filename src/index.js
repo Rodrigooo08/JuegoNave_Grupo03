@@ -1,5 +1,6 @@
 import Escena1 from "./scenes/Escena1.js"
 import Escena2 from "./scenes/Escena2.js"
+import EscenaBonus from "./scenes/EscenaBonus.js"
 import GameOver from "./scenes/GameOver.js";
 import MenuStart from "./scenes/MenuStart.js"; 
 import Escena3 from "./scenes/Escena3.js";
