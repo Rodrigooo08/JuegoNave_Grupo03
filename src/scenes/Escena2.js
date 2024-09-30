@@ -47,6 +47,11 @@ class Escena2 extends Phaser.Scene{
             
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
+
+        if (this.puntaje >= 200) {
+            this.scene.stop('Escena2'); 
+            this.scene.start('EscenaBonus', { puntaje: this.puntaje }); 
+        }
     }
     gameOver(jugador,meteoro){
         this.scene.start('GameOver');
