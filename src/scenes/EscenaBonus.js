@@ -8,6 +8,7 @@ class EscenaBonus extends Phaser.Scene{
     }
     init(data){
         this.puntaje = data.puntaje;
+        this.balasRecolectadas=data.balasRecolectadas;
     }
     generarHerramientas() {
         const x = Phaser.Math.Between(0, 800); 
@@ -108,7 +109,8 @@ class EscenaBonus extends Phaser.Scene{
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
 
         if (this.tiempoTranscurrido >= 20) {
-            this.scene.stop('EscenaBonus'); 
+            //this.scene.stop('EscenaBonus'); 
+            this.scene.start('Escena3',{puntaje:this.puntaje,balasRecolectadas: this.balasRecolectadas})
             // this.scene.start('EscenaBonus', { puntaje: this.puntaje }); 
         }
     }
