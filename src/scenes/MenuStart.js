@@ -5,12 +5,27 @@ class MenuStart extends Phaser.Scene {
 
     preload() {  
         this.load.image('menu','public/resource/image/fondo.jpg');
-        // Puedes cargar imágenes o sonidos aquí  
+        this.load.audio('menuMusic','public/resource/sound/MusicaMenu.mp3');
+        // carga imágen y sonido  
     }  
 
     create() {  
+        //sonido menu
+        this.musicaMenu = this.sound.add('menuMusic');
+        const soundConfig={volume:1,loop:true};
+            if(!this.sound.locked){
+                this.musicaMenu.play(soundConfig);
+            } else {
+                this.input.once('pointerdown', () => {
+                    this.musicaMenu.play(soundConfig);
+                });
+                
+            }
+            
+    
          //fondo menu
         this.add.image(400,300,'menu');
+        
         // Título del juego  
         this.add.text(400, 100, 'Esquivando Meteoros', {  
             fontSize: '64px',  
@@ -47,12 +62,15 @@ class MenuStart extends Phaser.Scene {
     }  
 
     startGame() {  
-        console.log("Iniciando el juego...");  
+        console.log("Iniciando el juego...");
+      if(this.musicaMenu != null){
+        this.musicaMenu.stop();}
         this.scene.start('Escena1'); // Cambia a la escena 1  
     }  
 
     exitGame() {  
         console.log("Saliendo del juego...");  
+        this.musicaMenu.stop();
         this.game.destroy(true); // Destruir el juego  
     }  
 }  

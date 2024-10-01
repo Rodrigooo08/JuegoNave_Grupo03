@@ -12,6 +12,10 @@ class Escena1 extends Phaser.Scene{
         this.load.image('meteoro','public/resource/image/asteroide.png')
     }
     create(){
+        // Detener la música del menú si es necesario
+        if (this.scene.isActive('MenuStart')) {
+            this.scene.get('MenuStart').musicaMenu.stop();
+        }
         //fondo escena
         this.add.image(400,300,'cielo');
         //jugador
@@ -49,7 +53,7 @@ class Escena1 extends Phaser.Scene{
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
         
         //Verifica el cambio de escena segun el puntaje
-        if (this.puntaje >= 800) {
+        if (this.puntaje >= 1000) {
             this.scene.stop('Escena1'); 
             this.scene.start('Escena2', { puntaje: this.puntaje });
         }

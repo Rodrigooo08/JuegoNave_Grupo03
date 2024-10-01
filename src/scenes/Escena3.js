@@ -85,6 +85,11 @@ class Escena3 extends Phaser.Scene{
         }
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
+
+         //condicion para detener de escena
+         if(this.puntaje >= 4000){
+            this.scene.stop('Escena3');
+        }
     }
     gameOver(jugador,meteoro){
         this.scene.start('GameOver');
