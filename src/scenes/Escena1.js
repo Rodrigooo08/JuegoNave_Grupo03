@@ -12,6 +12,10 @@ class Escena1 extends Phaser.Scene{
         this.load.image('meteoro','public/resource/image/asteroide.png')
     }
     create(){
+        // Detener la música del menú si es necesario
+        if (this.scene.isActive('MenuStart')) {
+            this.scene.get('MenuStart').musicaMenu.stop();
+        }
         //fondo escena
         this.add.image(400,300,'cielo');
         //jugador
