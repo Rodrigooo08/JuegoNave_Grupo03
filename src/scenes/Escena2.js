@@ -6,6 +6,7 @@ class Escena2 extends Phaser.Scene{
     }
     init(data){
         this.puntaje = data.puntaje;
+        this.musicaFondo=data.musicaFondo;
     }
     generarBalas(){
         const x = Phaser.Math.Between(0, 800); // Posición aleatoria en el eje X
@@ -14,7 +15,7 @@ class Escena2 extends Phaser.Scene{
     }
     recolertarBala(jugador,bala){
         bala.disableBody(true, true);  // Eliminar la bala del mapa
-        this.balasRecolectadas++;
+        this.balasRecolectadas=this.balasRecolectadas+5;
         this.textoBalas.setText('Balas Recolectadas: ' + this.balasRecolectadas);     
     }
     preload(){
@@ -22,6 +23,7 @@ class Escena2 extends Phaser.Scene{
         this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
         this.load.image('meteoro2','public/resource/image/asteroide_32x32.png')
         this.load.image('bala','public/resource/image/bala.png');
+       
     }
     create(){
         //fondo escena
@@ -94,12 +96,15 @@ class Escena2 extends Phaser.Scene{
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
         //condicion para pasar de escena
         if(this.puntaje >= 2000){
-            this.scene.start('EscenaBonus',{puntaje:this.puntaje,balasRecolectadas: this.balasRecolectadas});
+            if(this.musicaFondo != null){
+                this.musicaFondo.stop();}
+            this.scene.start('EscenaBonus',{puntaje:this.puntaje,balasRecolectadas: this.balasRecolectadas,musicaFondo:this.musicaFondo});
         }
     }
 
     gameOver(jugador,meteoro){
-        this.scene.start('GameOver');
+        if(this.musicaFondo != null){
+            this.musicaFondo.stop();}
         this.scene.start('GameOver',{puntaje: this.puntaje});
     }
 }

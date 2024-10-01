@@ -3,12 +3,12 @@ class EscenaBonus extends Phaser.Scene{
         super("EscenaBonus");
         this.jugador=null;
         this.cursors=null;
-        this.puntaje = '';
         this.textoPuntaje='';
     }
     init(data){
         this.puntaje = data.puntaje;
         this.balasRecolectadas=data.balasRecolectadas;
+        this.musicaFondo= data.musicaFondo;
     }
     generarHerramientas() {
         const x = Phaser.Math.Between(0, 800); 
@@ -45,7 +45,8 @@ class EscenaBonus extends Phaser.Scene{
          this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
          this.load.image('herramienta2','public/resource/image/herramientas2_32x32.png'),
          this.load.image('herramienta','public/resource/image/herramientas_32x32.png'),
-         this.load.image('herramienta3','public/resource/image/herramienta3_32x32.png')
+         this.load.image('herramienta3','public/resource/image/herramienta3_32x32.png'),
+         this.load.audio('MusicaBonus','public/resource/sound/Bonus.mp3')
     }
 
     actualizarContador() {
@@ -53,6 +54,11 @@ class EscenaBonus extends Phaser.Scene{
         this.contadorTexto.setText('Tiempo: ' + this.tiempoTranscurrido); 
     }
     create(){
+        this.MusicaBonus = this.sound.add('MusicaBonus');
+        const soundConfig={volume:1,loop:true};
+        if(!this.sound.locked){
+            this.MusicaBonus.play(soundConfig);
+        }
         //fondo escena
         this.add.image(400,300,'bgBonus');
         //jugador
@@ -135,7 +141,9 @@ class EscenaBonus extends Phaser.Scene{
 
         if (this.tiempoTranscurrido >= 20) {
             //this.scene.stop('EscenaBonus'); 
-            this.scene.start('Escena3',{puntaje:this.puntaje,balasRecolectadas: this.balasRecolectadas})
+            if(this.MusicaBonus != null){
+                this.MusicaBonus.stop();}
+            this.scene.start('Escena3',{puntaje:this.puntaje,balasRecolectadas: this.balasRecolectadas,musicaFondo:this.musicaFondo})
             // this.scene.start('EscenaBonus', { puntaje: this.puntaje }); 
         }
     }

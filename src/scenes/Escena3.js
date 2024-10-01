@@ -3,12 +3,12 @@ class Escena3 extends Phaser.Scene{
         super("Escena3");
         this.jugador=null;
         this.cursors=null;
-        this.puntaje = 0;
         this.textoPuntaje='';
     }
     init(data){
         this.puntaje=data.puntaje;
         this.balasRecolectadas=data.balasRecolectadas;
+        this.musicaFondo=data.musicaFondo;
     }
     dispararBala(){
         if(this.balasRecolectadas == 0){
@@ -39,6 +39,7 @@ class Escena3 extends Phaser.Scene{
         this.load.image('meteoro5','public/resource/image/Basurita_espacial3.png')
     }
     create(){
+        this.musicaFondo.play();
         //fondo escena
         this.add.image(400,300,'cielo3').setDisplaySize(this.scale.width, this.scale.height);
         this.jugador = this.physics.add.sprite(400,550,'nave');
@@ -123,12 +124,14 @@ class Escena3 extends Phaser.Scene{
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
 
          //condicion para detener de escena
-         if(this.puntaje >= 4000){
+         if(this.puntaje >= 6000){
             this.scene.stop('Escena3');
+            if(this.musicaFondo != null){
+                this.musicaFondo.stop();}
+            this.scene.start('GameOver',{puntaje: this.puntaje});
         }
     }
     gameOver(jugador,meteoro){
-        this.scene.start('GameOver');
         this.scene.start('GameOver',{puntaje: this.puntaje});
     }
 }
