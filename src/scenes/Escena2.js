@@ -20,7 +20,7 @@ class Escena2 extends Phaser.Scene{
     }
     preload(){
         this.load.image('cielo2','public/resource/image/gamenave.png'),
-        this.load.image('nave','public/resource/image/nave1.png'),
+        this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
         this.load.image('meteoro2','public/resource/image/asteroide_32x32.png')
         this.load.image('bala','public/resource/image/bala.png');
        
@@ -47,6 +47,26 @@ class Escena2 extends Phaser.Scene{
         this.textoBalas = this.add.text(16,50,'Balas Recoletadas: 0',{ fontSize: '32px', fill: '#F5EFFF' });
         //deteccion de colicion con balas
         this.physics.add.overlap(this.jugador, this.balas, this.recolertarBala, null, this);
+   
+        this.anims.create({
+            key: 'izquierda',
+            frames: [{key:'nave',frame:2}], 
+            frameRate: 20,
+    
+        });
+        this.anims.create({
+            key: 'normal',
+            frames: [{key:'nave',frame:1}], 
+            frameRate: 20,
+    
+        });
+        this.anims.create({
+            key: 'derecha',
+            frames: [{key:'nave',frame:0}], 
+            frameRate: 20,
+    
+        });
+                        
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
@@ -58,13 +78,19 @@ class Escena2 extends Phaser.Scene{
         this.jugador.setVelocityY(0);
         if (this.cursors.left.isDown) {
             this.jugador.setVelocityX(-300); // Mover a la izquierda
+            this.jugador.anims.play('izquierda',true)
             } else if (this.cursors.right.isDown) {
             this.jugador.setVelocityX(300); // Mover a la derecha
+            this.jugador.anims.play('derecha',true)
             } else if (this.cursors.up.isDown){ //mover hacia adelante
                 this.jugador.setVelocityY(-300);
             } else if (this.cursors.down.isDown){ //mover hacia atras
                 this.jugador.setVelocityY(300);
+            } else{
+                this.jugador.anims.play('normal', true);
             }
+            
+            
             
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);

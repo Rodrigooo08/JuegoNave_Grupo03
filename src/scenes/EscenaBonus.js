@@ -42,7 +42,7 @@ class EscenaBonus extends Phaser.Scene{
 
     preload(){
          this.load.image('bgBonus','public/resource/image/BG_bonus.png'),
-         this.load.image('nave','public/resource/image/nave1.png'),
+         this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
          this.load.image('herramienta2','public/resource/image/herramientas2_32x32.png'),
          this.load.image('herramienta','public/resource/image/herramientas_32x32.png'),
          this.load.image('herramienta3','public/resource/image/herramienta3_32x32.png'),
@@ -96,6 +96,25 @@ class EscenaBonus extends Phaser.Scene{
         // Temporizador 
         this.temporizador = this.time.addEvent({ delay: 1000, callback: this.actualizarContador,callbackScope: this, loop: true 
         });
+        this.anims.create({
+            key: 'izquierda',
+            frames: [{key:'nave',frame:2}], 
+            frameRate: 20,
+    
+        });
+        this.anims.create({
+            key: 'normal',
+            frames: [{key:'nave',frame:1}], 
+            frameRate: 20,
+    
+        });
+        this.anims.create({
+            key: 'derecha',
+            frames: [{key:'nave',frame:0}], 
+            frameRate: 20,
+    
+        });
+                        
     }
 
     update(){
@@ -103,13 +122,19 @@ class EscenaBonus extends Phaser.Scene{
         this.jugador.setVelocityY(0);
         if (this.cursors.left.isDown) {
             this.jugador.setVelocityX(-300); // Mover a la izquierda
+            this.jugador.anims.play('izquierda',true)
             } else if (this.cursors.right.isDown) {
             this.jugador.setVelocityX(300); // Mover a la derecha
+            this.jugador.anims.play('derecha',true)
             } else if (this.cursors.up.isDown){ //mover hacia adelante
                 this.jugador.setVelocityY(-300);
             } else if (this.cursors.down.isDown){ //mover hacia atras
                 this.jugador.setVelocityY(300);
+            } else{
+                this.jugador.anims.play('normal', true);
             }
+            
+            
             
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);

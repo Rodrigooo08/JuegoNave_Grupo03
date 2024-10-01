@@ -33,7 +33,7 @@ class Escena3 extends Phaser.Scene{
     }
     preload(){
         this.load.image('cielo3','public/resource/image/Espacio.png'),
-        this.load.image('nave','public/resource/image/nave1.png'),
+        this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
         this.load.image('meteoro3','public/resource/image/Basurita_espacial2.png')
         this.load.image('meteoro4','public/resource/image/Basurita_espacial.png')
         this.load.image('meteoro5','public/resource/image/Basurita_espacial3.png')
@@ -58,6 +58,26 @@ class Escena3 extends Phaser.Scene{
         this.balas = this.physics.add.group();
         this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
         this.textoBalas = this.add.text(16,50,'Balas: '+this.balasRecolectadas,{ fontSize: '32px', fill: '#F5EFFF' });
+    
+        this.anims.create({
+            key: 'izquierda',
+            frames: [{key:'nave',frame:2}], 
+            frameRate: 20,
+    
+        });
+        this.anims.create({
+            key: 'normal',
+            frames: [{key:'nave',frame:1}], 
+            frameRate: 20,
+    
+        });
+        this.anims.create({
+            key: 'derecha',
+            frames: [{key:'nave',frame:0}], 
+            frameRate: 20,
+    
+        });
+                        
     }
     generarMeteoros() {
         const x = Phaser.Math.Between(0, 800); 
@@ -70,6 +90,22 @@ class Escena3 extends Phaser.Scene{
         meteoro.setVelocityY(velocidadY);
     }
     update(){
+        this.jugador.setVelocityX(0);
+        this.jugador.setVelocityY(0);
+        if (this.cursors.left.isDown) {
+            this.jugador.setVelocityX(-300); // Mover a la izquierda
+            this.jugador.anims.play('izquierda',true)
+            } else if (this.cursors.right.isDown) {
+            this.jugador.setVelocityX(300); // Mover a la derecha
+            this.jugador.anims.play('derecha',true)
+            } else if (this.cursors.up.isDown){ //mover hacia adelante
+                this.jugador.setVelocityY(-300);
+            } else if (this.cursors.down.isDown){ //mover hacia atras
+                this.jugador.setVelocityY(300);
+            } else{
+                this.jugador.anims.play('normal', true);
+            }
+            
         this.jugador.setVelocityX(0);
         this.jugador.setVelocityY(0);
         if (this.cursors.left.isDown) {
