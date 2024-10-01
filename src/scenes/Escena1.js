@@ -9,7 +9,8 @@ class Escena1 extends Phaser.Scene{
     preload(){
         this.load.image('cielo','public/resource/image/Espacio.jpg'),
         this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
-        this.load.image('meteoro','public/resource/image/asteroide.png')
+        this.load.image('meteoro','public/resource/image/asteroide.png'),
+        this.load.audio('musicaFondo','public/resource/sound/Star Wars.mp3')
     }
     create(){
         this.musicaFondo = this.sound.add('musicaFondo');
@@ -77,7 +78,6 @@ class Escena1 extends Phaser.Scene{
             
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
-        //
         //Verifica el cambio de escena segun el puntaje
         if (this.puntaje >= 1000) {
             this.scene.stop('Escena1'); 
@@ -91,7 +91,7 @@ class Escena1 extends Phaser.Scene{
         // this.scene.start('GameOver');
         if(this.musicaFondo != null){
             this.musicaFondo.stop();}
-        this.scene.start('GameOver',{puntaje: this.puntaje});
+        this.scene.start('GameOver',{puntaje: this.puntaje,musicaFondo:this.musicaFondo});
     }
 }
 export default Escena1;
