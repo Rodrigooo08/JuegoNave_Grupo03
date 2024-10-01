@@ -132,6 +132,8 @@ class Escena3 extends Phaser.Scene{
         }
     }
     gameOver(jugador,meteoro){
+        if(this.musicaFondo != null){
+            this.musicaFondo.stop();}
         this.scene.start('GameOver',{puntaje: this.puntaje});
     }
 }

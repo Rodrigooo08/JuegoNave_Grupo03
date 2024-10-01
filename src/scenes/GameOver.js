@@ -35,6 +35,7 @@ class GameOver extends Phaser.Scene {
         texto.setDepth(1); 
 
         this.input.keyboard.once('keydown-SPACE', () => {
+            this.Final.stop();
             this.scene.start('Escena1');
         });
     }
