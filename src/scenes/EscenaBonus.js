@@ -65,7 +65,7 @@ class EscenaBonus extends Phaser.Scene{
     //     this.textoPuntaje.setText('Puntaje: ' + this.puntaje);
     // }
     sumarPuntaje(herramientaG) {
-        this.puntaje += herramientaG * 50; 
+        this.puntaje += herramientaG * 20; 
         this.textoPuntaje.setText('Puntaje: ' + this.puntaje);
     }
 

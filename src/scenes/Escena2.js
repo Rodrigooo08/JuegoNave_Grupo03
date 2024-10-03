@@ -95,7 +95,7 @@ class Escena2 extends Phaser.Scene{
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
         //condicion para pasar de escena
-        if(this.puntaje >= 200){
+        if(this.puntaje >= 2000){
             if(this.musicaFondo != null){
                 this.musicaFondo.stop();}
             this.scene.start('EscenaBonus',{puntaje:this.puntaje,balasRecolectadas: this.balasRecolectadas,musicaFondo:this.musicaFondo});
