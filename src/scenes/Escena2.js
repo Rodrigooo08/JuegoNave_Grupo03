@@ -4,6 +4,10 @@ class Escena2 extends Phaser.Scene{
         this.textoBalas='';
         this.balasRecolectadas=0;
     }
+    actualizarContador() {
+        this.tiempoTranscurrido += 1; 
+        this.contadorTexto.setText('Tiempo: ' + this.tiempoTranscurrido); 
+    }
     init(data){
         this.puntaje = data.puntaje;
         this.musicaFondo=data.musicaFondo;
@@ -47,6 +51,11 @@ class Escena2 extends Phaser.Scene{
         this.textoBalas = this.add.text(16,50,'Balas Recoletadas: 0',{ fontSize: '32px', fill: '#F5EFFF' });
         //deteccion de colicion con balas
         this.physics.add.overlap(this.jugador, this.balas, this.recolertarBala, null, this);
+        this.tiempoTranscurrido = 0;
+        this.contadorTexto = this.add.text(580, 16, 'Tiempo: 0', { fontSize: '32px', fill: '#CB80AB' });
+        // Temporizador 
+        this.temporizador = this.time.addEvent({ delay: 1000, callback: this.actualizarContador,callbackScope: this, loop: true 
+        });
    
         this.anims.create({
             key: 'izquierda',
@@ -95,7 +104,7 @@ class Escena2 extends Phaser.Scene{
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
         //condicion para pasar de escena
-        if(this.puntaje >= 2000){
+        if(this.tiempoTranscurrido >= 20){
             if(this.musicaFondo != null){
                 this.musicaFondo.stop();}
             this.scene.start('EscenaBonus',{puntaje:this.puntaje,balasRecolectadas: this.balasRecolectadas,musicaFondo:this.musicaFondo});

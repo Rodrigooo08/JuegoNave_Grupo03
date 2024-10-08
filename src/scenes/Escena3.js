@@ -5,6 +5,10 @@ class Escena3 extends Phaser.Scene{
         this.cursors=null;
         this.textoPuntaje='';
     }
+    actualizarContador() {
+        this.tiempoTranscurrido += 1; 
+        this.contadorTexto.setText('Tiempo: ' + this.tiempoTranscurrido); 
+    }
     init(data){
         this.puntaje=data.puntaje;
         this.balasRecolectadas=data.balasRecolectadas;
@@ -51,13 +55,18 @@ class Escena3 extends Phaser.Scene{
         this.grupoMeteoros = this.physics.add.group();
         this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
         //puntaje
-        this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
+        this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'});
         //collider
         this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
         //balas
         this.balas = this.physics.add.group();
         this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
         this.textoBalas = this.add.text(16,50,'Balas: '+this.balasRecolectadas,{ fontSize: '32px', fill: '#F5EFFF' });
+        this.tiempoTranscurrido = 0;
+        this.contadorTexto = this.add.text(580, 16, 'Tiempo: 0', { fontSize: '32px', fill: '#CB80AB' });
+        // Temporizador 
+        this.temporizador = this.time.addEvent({ delay: 1000, callback: this.actualizarContador,callbackScope: this, loop: true 
+        });
     
         this.anims.create({
             key: 'izquierda',
@@ -124,11 +133,11 @@ class Escena3 extends Phaser.Scene{
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
 
          //condicion para detener de escena
-         if(this.puntaje >= 6000){
+         if(this.tiempoTranscurrido >= 20){
             this.scene.stop('Escena3');
             if(this.musicaFondo != null){
                 this.musicaFondo.stop();}
-            this.scene.start('GameOver',{puntaje: this.puntaje});
+            this.scene.start('Escena4',{puntaje: this.puntaje, musicaFondo:this.musicaFondo});
         }
     }
     gameOver(jugador,meteoro){

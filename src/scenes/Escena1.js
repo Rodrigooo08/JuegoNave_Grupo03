@@ -6,6 +6,10 @@ class Escena1 extends Phaser.Scene{
         this.puntaje = 0;
         this.textoPuntaje='';
     }
+    actualizarContador() {
+        this.tiempoTranscurrido += 1; 
+        this.contadorTexto.setText('Tiempo: ' + this.tiempoTranscurrido); 
+    }
     preload(){
         this.load.image('cielo','public/resource/image/Espacio.jpg'),
         this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
@@ -32,6 +36,11 @@ class Escena1 extends Phaser.Scene{
         this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
         //collider
         this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
+        this.tiempoTranscurrido = 0;
+        this.contadorTexto = this.add.text(580, 16, 'Tiempo: 0', { fontSize: '32px', fill: '#CB80AB' });
+        // Temporizador 
+        this.temporizador = this.time.addEvent({ delay: 1000, callback: this.actualizarContador,callbackScope: this, loop: true 
+        });
 
         this.anims.create({
             key: 'izquierda',
@@ -79,7 +88,7 @@ class Escena1 extends Phaser.Scene{
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
         //Verifica el cambio de escena segun el puntaje
-        if (this.puntaje >= 1000) {
+        if (this.tiempoTranscurrido >= 20) {
             this.scene.stop('Escena1'); 
             this.scene.start('Escena2', { puntaje: this.puntaje,musicaFondo:this.musicaFondo });
         }
