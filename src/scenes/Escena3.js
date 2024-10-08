@@ -55,7 +55,7 @@ class Escena3 extends Phaser.Scene{
         this.grupoMeteoros = this.physics.add.group();
         this.time.addEvent({ delay: 1000, callback: this.generarMeteoros, callbackScope: this, loop: true });
         //puntaje
-        this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
+        this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'});
         //collider
         this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
         //balas
@@ -137,7 +137,7 @@ class Escena3 extends Phaser.Scene{
             this.scene.stop('Escena3');
             if(this.musicaFondo != null){
                 this.musicaFondo.stop();}
-            this.scene.start('GameOver',{puntaje: this.puntaje});
+            this.scene.start('Escena4',{puntaje: this.puntaje, musicaFondo:this.musicaFondo});
         }
     }
     gameOver(jugador,meteoro){
