@@ -1,6 +1,8 @@
 class Escena4 extends Phaser.Scene{
 constructor(){
     super("Escena4");
+    this.vidasRestantes=0;
+    this.textoVidas='';
 }
 init(data){
     this.puntaje=data.puntaje;
@@ -25,6 +27,17 @@ destruirAsteroide(bala,meteoro){
     meteoro.disableBody(true,true);
     bala.disableBody(true,true);
 }
+reducirVida(jugador, meteoro) {
+    meteoro.disableBody(true, true);
+    this.vidasRestantes--;
+    if (this.vidasRestantes >= 0) {
+        this.textoVidas.setText('Vidas: '+this.vidasRestantes);
+        }
+        if (this.vidasRestantes <= 0) {
+            this.gameOver(jugador);
+        }
+}
+
 gameOver(jugador,meteoro){
     // this.scene.start('GameOver');
     if(this.musicaFondo != null){
@@ -49,13 +62,16 @@ create(){
     //balas
     this.balas = this.physics.add.group();
     this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
+    //vidas
+    this.vidasRestantes = 3; 
+    this.textoVidas = this.add.text(16,16,'Vidas: '+this.vidasRestantes,{ fontSize: '32px', fill: '#F5EFFF' });
     //collider
-    this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
+    this.physics.add.collider(this.jugador,this.grupoMeteoros,this.reducirVida,null,this);
     //controles
     this.cursors = this.input.keyboard.createCursorKeys();
     this.barraEspaciadora = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     //puntaje
-    this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'});
+    this.textoPuntaje=this.add.text(16,50,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'});
     //manejo sprite de jugador
     this.anims.create({
         key: 'izquierda',
