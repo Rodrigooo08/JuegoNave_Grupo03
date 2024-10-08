@@ -6,9 +6,20 @@ init(data){
     this.puntaje=data.puntaje;
     this.musicaFondo=data.musicaFondo;
 }
+dispararBala(){
+        let bala = this.balas.get(this.jugador.x,this.jugador.y,'bala');
+        if(bala){
+            bala.setActive(true);
+            bala.setVisible(true);
+            bala.body.reset(this.jugador.x,this.jugador.y);
+            bala.body.enable=true;
+            bala.setVelocityX(400);
+        }
+}
 preload(){
     this.load.image('cielo4','public/resource/image/EspacioHorizontal.png'),
-    this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80})
+    this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
+    this.load.image('bala','public/resource/image/bala.png')
 }
 create(){
     //this.add.image(400,300,'cielo').setDisplaySize(this.scale.width, this.scale.height);
@@ -16,6 +27,9 @@ create(){
     //jugador
     this.jugador = this.physics.add.sprite(10,300,'nave');
     this.jugador.setCollideWorldBounds(true);
+    //balas
+    this.balas = this.physics.add.group();
+    this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
      //controles
      this.cursors = this.input.keyboard.createCursorKeys();
      this.barraEspaciadora = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -61,6 +75,9 @@ update(){
         } else{
             this.jugador.anims.play('normal', true);
         }
+    if(Phaser.Input.Keyboard.JustDown(this.barraEspaciadora)){
+        this.dispararBala();
+    }
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
 }
