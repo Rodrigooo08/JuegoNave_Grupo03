@@ -21,6 +21,16 @@ generarMeteoros() {
     const meteoro = this.grupoMeteoros.create(800, y, 'meteoro');
     meteoro.setVelocityX(-300); 
 }
+destruirAsteroide(bala,meteoro){
+    meteoro.disableBody(true,true);
+    bala.disableBody(true,true);
+}
+gameOver(jugador,meteoro){
+    // this.scene.start('GameOver');
+    if(this.musicaFondo != null){
+        this.musicaFondo.stop();}
+    this.scene.start('GameOver',{puntaje: this.puntaje});
+}
 preload(){
     this.load.image('cielo4','public/resource/image/EspacioHorizontal.png'),
     this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
@@ -33,12 +43,14 @@ create(){
     //jugador
     this.jugador = this.physics.add.sprite(10,300,'nave');
     this.jugador.setCollideWorldBounds(true);
-    //balas
-    this.balas = this.physics.add.group();
-    this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
     //meteoros
     this.grupoMeteoros = this.physics.add.group();
     this.time.addEvent({ delay: 500, callback: this.generarMeteoros, callbackScope: this, loop: true });
+    //balas
+    this.balas = this.physics.add.group();
+    this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
+    //collider
+    this.physics.add.collider(this.jugador,this.grupoMeteoros,this.gameOver,null,this);
     //controles
     this.cursors = this.input.keyboard.createCursorKeys();
     this.barraEspaciadora = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
