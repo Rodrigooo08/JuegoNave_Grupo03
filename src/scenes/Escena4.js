@@ -16,23 +16,32 @@ dispararBala(){
             bala.setVelocityX(400);
         }
 }
+generarMeteoros() {
+    const y = Phaser.Math.Between(0, 600); 
+    const meteoro = this.grupoMeteoros.create(800, y, 'meteoro');
+    meteoro.setVelocityX(-300); 
+}
 preload(){
     this.load.image('cielo4','public/resource/image/EspacioHorizontal.png'),
     this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
-    this.load.image('bala','public/resource/image/bala.png')
+    this.load.image('bala','public/resource/image/bala.png'),
+    this.load.image('meteoro','public/resource/image/asteroide.png')
 }
 create(){
     //this.add.image(400,300,'cielo').setDisplaySize(this.scale.width, this.scale.height);
-    this.fondo = this.add.tileSprite(400, 300, 800, 600, 'cielo4'); //(x,y,hight,width) para marcar la posicion de la imagen y tamaño a ocupar
+    this.fondo = this.add.tileSprite(400, 300, 800, 600, 'cielo4'); //(x,y,width,height) para marcar la posicion de la imagen y tamaño a ocupar
     //jugador
     this.jugador = this.physics.add.sprite(10,300,'nave');
     this.jugador.setCollideWorldBounds(true);
     //balas
     this.balas = this.physics.add.group();
     this.physics.add.overlap(this.balas,this.grupoMeteoros,this.destruirAsteroide, null, this);
-     //controles
-     this.cursors = this.input.keyboard.createCursorKeys();
-     this.barraEspaciadora = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    //meteoros
+    this.grupoMeteoros = this.physics.add.group();
+    this.time.addEvent({ delay: 500, callback: this.generarMeteoros, callbackScope: this, loop: true });
+    //controles
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.barraEspaciadora = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     //puntaje
     this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'});
     //manejo sprite de jugador
