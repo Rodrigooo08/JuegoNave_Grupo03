@@ -24,22 +24,6 @@ class EscenaBonus extends Phaser.Scene{
         herramientaG.setVelocityY(velocidadY);
     }
 
-    // generarHerramientas() {
-    //     const x = Phaser.Math.Between(0, 800); 
-    //     const herramienta3 = this.grupoHerramientas.create(x, 0, 'herramienta3');
-    //     herramienta3.setVelocityY(150); 
-        
-    // }
-    // generarHerramientasC() {
-    //     const x = Phaser.Math.Between(0, 800); 
-    //     const herramienta2 = this.grupoHerramientasC.create(x, 0,'herramienta2');
-    //     herramienta2.setVelocityY(200); 
-    // }
-    // generarHerramientasA() {
-    //     const x = Phaser.Math.Between(0, 800); 
-    //     const herramienta = this.grupoHerramientasA.create(x, 0,'herramienta');
-    //     herramienta.setVelocityY(300); 
-    // }
 
     recolectarHerramientas(jugador,herramientaG){
         //const valorHeramienta = this.obtenerValorHeramienta(herramientaG);
@@ -69,17 +53,7 @@ class EscenaBonus extends Phaser.Scene{
         this.textoPuntaje.setText('Puntaje: ' + this.puntaje);
     }
 
-    // recolectarHerramientaA(jugador,herramienta){
-    //     herramienta.disableBody(true, true);
-    // }
-    // recolectarHerramientaC(jugador,herramienta2){
-    //     herramienta2.disableBody(true, true);
-
-    // }
-    // recolectarHerramienta(jugador,herramienta3){
-    //     herramienta3.disableBody(true, true);
-
-    // }
+   
     actualizarContador() {
         this.tiempoTranscurrido += 1; 
         this.contadorTexto.setText('Tiempo: ' + this.tiempoTranscurrido); 
@@ -107,30 +81,11 @@ class EscenaBonus extends Phaser.Scene{
         this.jugador = this.physics.add.sprite(400,550,'nave');
         this.jugador.setCollideWorldBounds(true);
         this.cursors = this.input.keyboard.createCursorKeys();
-        // //herramientas
-        // this.grupoHerramientas = this.physics.add.group();
-        // this.time.addEvent({ delay: 1500, callback: this.generarHerramientas, callbackScope: this, loop: true });
-        
-        // this.grupoHerramientasC = this.physics.add.group();
-        // this.time.addEvent({ delay: 1000, callback: this.generarHerramientasC, callbackScope: this, loop: true });
-        
-        // this.grupoHerramientasA = this.physics.add.group();
-        // this.time.addEvent({ delay: 1800, callback: this.generarHerramientasA, callbackScope: this, loop: true });
        
-        // this.physics.add.overlap(this.jugador, this.grupoHerramientasA, this.recolectarHerramientaA, null, this);
-
-        // this.physics.add.overlap(this.jugador, this.grupoHerramientasC, this.recolectarHerramientaC, null, this);
-
-        // this.physics.add.overlap(this.jugador, this.grupoHerramientas, this.recolectarHerramienta, null, this);
-
         //puntaje
-        // this.puntaje=0;
         this.textoPuntaje=this.add.text(16,16,'Puntaje: 0',{fontSize:'32px',fill:'#CB80AB'})
-        //collider
-        //this.physics.add.collider(this.jugador,this.grupoHerramientas,this.gameOver,null,this);
-        //this.physics.add.collider(this.jugador,this.grupoHerramientasC,this.gameOver,null,this);
-        //this.physics.add.collider(this.jugador,this.grupoHerramientasA,this.gameOver,null,this);
-    
+       
+        //Tiempo
         this.tiempoTranscurrido = 0;
         this.contadorTexto = this.add.text(580, 16, 'Tiempo: 0', { fontSize: '32px', fill: '#CB80AB' });
 
@@ -200,9 +155,6 @@ class EscenaBonus extends Phaser.Scene{
             // this.scene.start('EscenaBonus', { puntaje: this.puntaje }); 
         }
     }
-    // gameOver(jugador,meteoro){
-    //     this.scene.start('GameOver');
-    //     this.scene.start('GameOver',{puntaje: this.puntaje});
-    // }
+   
 }
 export default EscenaBonus;
