@@ -12,7 +12,7 @@ class Escena1 extends Phaser.Scene{
     }
     preload(){
         this.load.image('cielo','public/resource/image/Espacio.jpg'),
-        this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
+        this.load.spritesheet('nave','public/resource/image/nave2.png', {frameWidth:75,frameHeight:80}),
         this.load.image('meteoro','public/resource/image/asteroide.png'),
         this.load.audio('musicaFondo','public/resource/sound/Star Wars.mp3')
     }
