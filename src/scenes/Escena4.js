@@ -49,6 +49,7 @@ preload(){
     this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
     this.load.image('bala','public/resource/image/bala.png'),
     this.load.image('meteoro','public/resource/image/asteroide.png')
+    this.load.spritesheet('jefeFinal','public/resource/image/Jefe Final.png', { frameWidth: 304, frameHeight: 235 })
 }
 create(){
     //this.add.image(400,300,'cielo').setDisplaySize(this.scale.width, this.scale.height);
@@ -56,6 +57,15 @@ create(){
     //jugador
     this.jugador = this.physics.add.sprite(10,300,'nave');
     this.jugador.setCollideWorldBounds(true);
+    // Jefe Final
+    this.anims.create({
+        key: 'jefeAnimado',
+        frames: this.anims.generateFrameNumbers('jefeFinal', { start: 1, end: 46 }), // Cambia el rango según la cantidad de fotogramas que tenga tu GIF
+        frameRate: 10, // Ajusta la velocidad de la animación
+        repeat: -1 // Hace que la animación se repitra indefinidamente
+    });
+    //Crea el sprite del jefe final
+    this.jefeFinal = this.physics.add.sprite(400, 300, 'jefeFinal').play('jefeAnimado');
     //meteoros
     this.grupoMeteoros = this.physics.add.group();
     this.time.addEvent({ delay: 500, callback: this.generarMeteoros, callbackScope: this, loop: true });
@@ -117,6 +127,6 @@ update(){
     }
         this.puntaje +=1;
         this.textoPuntaje.setText('Puntaje: '+this.puntaje);
-}
+ }
 }
 export default Escena4;
