@@ -42,8 +42,17 @@ class Escena4 extends Phaser.Scene {
             this.vidaJefe--; // Reduce la vida del jefe
         if (this.vidaJefe <= 0) {
             jefeFinal.disableBody(true,true);
+            this.Victoria();
         }
  }
+    Victoria() {
+
+    if (this.musicaFondo != null) {
+        this.musicaFondo.stop();
+    }
+ 
+    this.scene.start('Victoria', { puntaje: this.puntaje });
+}
     gameOver(jugador, meteoro) {
         // this.scene.start('GameOver');
         if (this.musicaFondo != null) {
