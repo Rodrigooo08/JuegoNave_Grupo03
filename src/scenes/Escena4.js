@@ -37,7 +37,13 @@ class Escena4 extends Phaser.Scene {
             this.gameOver(jugador);
         }
     }
-
+    reducirVidaJefe(jefeFinal,bala){
+        bala.disableBody(true, true); // Desactiva la bala
+            this.vidaJefe--; // Reduce la vida del jefe
+        if (this.vidaJefe <= 0) {
+            jefeFinal.disableBody(true,true);
+        }
+ }
     gameOver(jugador, meteoro) {
         // this.scene.start('GameOver');
         if (this.musicaFondo != null) {
@@ -59,6 +65,8 @@ class Escena4 extends Phaser.Scene {
         this.jugador = this.physics.add.sprite(10, 300, 'naveVer');
         this.jugador.setCollideWorldBounds(true);
         // Jefe Final
+        //Vidas Jefe
+        this.vidaJefe =50;
         this.anims.create({
             key: 'jefeAnimado',
             frames: this.anims.generateFrameNumbers('jefeFinal', { start: 1, end: 46 }), // Cambia el rango según la cantidad de fotogramas que tenga tu GIF
@@ -67,6 +75,7 @@ class Escena4 extends Phaser.Scene {
         });
         //Crea el sprite del jefe final
         this.jefeFinal = this.physics.add.sprite(800, 400, 'jefeFinal').play('jefeAnimado');
+       // this.jefeFinal.setCollideWorldBounds(true);
         // Agrega lógica para que el Jefe final se mueva
         this.jefeFinal.setVelocityX(-100); // Mover hacia la derecha
         this.jefeFinal.setVelocityY(-100) // mover hacia arriba 
@@ -76,6 +85,7 @@ class Escena4 extends Phaser.Scene {
         //balas
         this.balas = this.physics.add.group();
         this.physics.add.overlap(this.balas, this.grupoMeteoros, this.destruirAsteroide, null, this);
+        this.physics.add.overlap(this.balas, this.jefeFinal, this.reducirVidaJefe,null, this);
         //vidas
         this.vidasRestantes = 3;
         this.textoVidas = this.add.text(16, 16, 'Vidas: ' + this.vidasRestantes, { fontSize: '32px', fill: '#F5EFFF' });
