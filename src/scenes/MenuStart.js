@@ -76,7 +76,7 @@ class MenuStart extends Phaser.Scene {
         console.log("Iniciando el juego...");
       if(this.musicaMenu != null){
         this.musicaMenu.stop();}
-        this.scene.start('Escena1'); // Cambia a la escena 1  
+        this.scene.start('Escena4'); // Cambia a la escena 1  
     }  
 
     configGame() {  

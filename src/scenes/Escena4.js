@@ -47,31 +47,38 @@ class Escena4 extends Phaser.Scene {
  }
     Victoria() {
 
-    if (this.musicaFondo != null) {
-        this.musicaFondo.stop();
+    if (this.audioEscena4 != null) {
+        this.audioEscena4.stop();
     }
  
     this.scene.start('Victoria', { puntaje: this.puntaje });
 }
     gameOver(jugador, meteoro) {
         // this.scene.start('GameOver');
-        if (this.musicaFondo != null) {
-            this.musicaFondo.stop();
+        if (this.audioEscena4 != null) {
+            this.audioEscena4.stop();
         }
         this.scene.start('GameOver', { puntaje: this.puntaje });
     }
     preload() {
         this.load.image('cielo4', 'public/resource/image/EspacioHorizontal.png'),
-            this.load.spritesheet('naveVer', 'public/resource/image/naveVer.png', { frameWidth: 82, frameHeight: 77 }),
-            this.load.image('bala', 'public/resource/image/bala.png'),
-            this.load.image('meteoro', 'public/resource/image/asteroide.png')
+        this.load.spritesheet('naveVer', 'public/resource/image/naveVer.png', { frameWidth: 82, frameHeight: 77 }),
+        this.load.image('bala', 'public/resource/image/bala.png'),
+        this.load.image('meteoro', 'public/resource/image/asteroide.png')
         this.load.spritesheet('jefeFinal', 'public/resource/image/Jefe Final.png', { frameWidth: 304, frameHeight: 235 }),
         this.load.spritesheet('vida', 'public/resource/image/spritesheet_cascotime_32x32.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.audio('audioEscena4','public/resource/sound/MusicaMenu.mp3');
 
     }
     create() {
         //this.add.image(400,300,'cielo').setDisplaySize(this.scale.width, this.scale.height);
         this.fondo = this.add.tileSprite(400, 300, 800, 600, 'cielo4'); //(x,y,width,height) para marcar la posicion de la imagen y tamaño a ocupar
+        //audioo
+        this.audioEscena4 = this.sound.add('audioEscena4');
+        const soundConfig={volume:1,loop:true};
+        if(!this.sound.locked){
+            this.audioEscena4.play(soundConfig);
+        }
         //jugador
         this.jugador = this.physics.add.sprite(10, 300, 'naveVer');
         this.jugador.setCollideWorldBounds(true);
