@@ -5,6 +5,7 @@ class Escena1 extends Phaser.Scene{
         this.cursors=null;
         this.puntaje = 0;
         this.textoPuntaje='';
+        
     }
     actualizarContador() {
         this.tiempoTranscurrido += 1; 
@@ -60,6 +61,8 @@ class Escena1 extends Phaser.Scene{
             frameRate: 20,
     
         });
+
+      
                         
     }
     generarMeteoros() {
