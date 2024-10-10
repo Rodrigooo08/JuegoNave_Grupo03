@@ -37,7 +37,7 @@ class Victoria extends Phaser.Scene {
 
         texto.setDepth(1);
 
-        this.input.keyboard.once('keydown-SPACE', () => {
+        this.input.keyboard.once('keydown-ENTER', () => {
             this.Final.stop();
             this.scene.start('Escena1');
         });
