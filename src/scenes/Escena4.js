@@ -3,7 +3,6 @@ class Escena4 extends Phaser.Scene {
         super("Escena4");
         this.vidasRestantes = 0;
         this.textoVidas = '';
-        this.jugador=null;
     }
     init(data) {
         this.puntaje = data.puntaje;
