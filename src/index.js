@@ -23,7 +23,7 @@ const config={
     width: 800,
     height: 600,
     parent:'game-container',
-    scene: [MenuStart,Escena1, Escena2, EscenaBonus, Escena3, Escena4, GameOver, Ajuste, Victoria],
+    scene: [MenuStart,Escena1, Escena2, EscenaBonus, Escena3, Escena4, GameOver, Ajustes, Victoria],
     physics:{
         default: 'arcade',
         arcade:{
