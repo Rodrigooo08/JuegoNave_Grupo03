@@ -6,7 +6,6 @@ class Ajustes extends Phaser.Scene{
     preload(){
         this.load.image('fondoAjustes','public/resource/image/fondo.jpg');
         this.load.image('botonFlechas','public/resource/image/flechas.png');
-        this.load.image('botonWasd','public/resource/image/wasd.png');
         this.load.image('botonBarraEspaciadora','public/resource/image/barraEspaciadora.png');
 
 
@@ -14,8 +13,7 @@ class Ajustes extends Phaser.Scene{
 
     create(){
         this.add.image(400,300,'fondoAjustes');
-        this.add.image(500, 200, 'botonWasd');
-        this.add.image(650, 200, 'botonFlechas');
+        this.add.image(550, 200, 'botonFlechas');
         this.add.image(550, 400, 'botonBarraEspaciadora');
 
 
