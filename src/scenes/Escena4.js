@@ -39,7 +39,11 @@ class Escena4 extends Phaser.Scene {
     }
     reducirVidaJefe(jefeFinal,bala){
         bala.disableBody(true, true); // Desactiva la bala
-            this.vidaJefe--; // Reduce la vida del jefe
+        this.vidaJefe--; // Reduce la vida del jefe
+        jefeFinal.setTint(0xff0000);
+        this.time.delayedCall(1000, () => {
+            jefeFinal.clearTint();
+        });
         if (this.vidaJefe <= 0) {
             jefeFinal.disableBody(true,true);
             this.Victoria();
