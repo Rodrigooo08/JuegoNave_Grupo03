@@ -60,6 +60,8 @@ class Escena1 extends Phaser.Scene{
             frameRate: 20,
     
         });
+
+      
                         
     }
     generarMeteoros() {

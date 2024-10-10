@@ -3,6 +3,7 @@ class Escena4 extends Phaser.Scene {
         super("Escena4");
         this.vidasRestantes = 0;
         this.textoVidas = '';
+        this.jugador=null;
     }
     init(data) {
         this.puntaje = data.puntaje;
@@ -31,7 +32,7 @@ class Escena4 extends Phaser.Scene {
         meteoro.disableBody(true, true);
         this.vidasRestantes--;
         if (this.vidasRestantes >= 0) {
-            this.textoVidas.setText('Vidas: ' + this.vidasRestantes);
+            this.textoVidas.setText(': ' + this.vidasRestantes);
         }
         if (this.vidasRestantes <= 0) {
             this.gameOver(jugador);
@@ -65,7 +66,9 @@ class Escena4 extends Phaser.Scene {
             this.load.spritesheet('naveVer', 'public/resource/image/naveVer.png', { frameWidth: 82, frameHeight: 77 }),
             this.load.image('bala', 'public/resource/image/bala.png'),
             this.load.image('meteoro', 'public/resource/image/asteroide.png')
-        this.load.spritesheet('jefeFinal', 'public/resource/image/Jefe Final.png', { frameWidth: 304, frameHeight: 235 })
+        this.load.spritesheet('jefeFinal', 'public/resource/image/Jefe Final.png', { frameWidth: 304, frameHeight: 235 }),
+        this.load.spritesheet('vida', 'public/resource/image/spritesheet_cascotime_32x32.png', { frameWidth: 32, frameHeight: 32 });
+
     }
     create() {
         //this.add.image(400,300,'cielo').setDisplaySize(this.scale.width, this.scale.height);
@@ -97,14 +100,14 @@ class Escena4 extends Phaser.Scene {
         this.physics.add.overlap(this.balas, this.jefeFinal, this.reducirVidaJefe,null, this);
         //vidas
         this.vidasRestantes = 3;
-        this.textoVidas = this.add.text(16, 16, 'Vidas: ' + this.vidasRestantes, { fontSize: '32px', fill: '#F5EFFF' });
+        this.textoVidas = this.add.text(39, 20, ': ' + this.vidasRestantes, { fontSize: '32px', fill: '#F5EFFF' });
         //collider
         this.physics.add.collider(this.jugador, this.grupoMeteoros, this.reducirVida, null, this);
         //controles
         this.cursors = this.input.keyboard.createCursorKeys();
         this.barraEspaciadora = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         //puntaje
-        this.textoPuntaje = this.add.text(16, 50, 'Puntaje: 0', { fontSize: '32px', fill: '#CB80AB' });
+        this.textoPuntaje = this.add.text(500, 16, 'Puntaje: 0', { fontSize: '32px', fill: '#CB80AB' });
         //manejo sprite de jugador
         this.anims.create({
             key: 'izquierda',
@@ -124,6 +127,19 @@ class Escena4 extends Phaser.Scene {
             frameRate: 20,
 
         });
+
+        
+        //animacion del sprite de la vida
+        this.anims.create({
+        key: 'v',
+        frames: this.anims.generateFrameNumbers('vida', { start: 0, end: 2 }),
+        frameRate: 4,
+        repeat: -1,
+        });
+        //
+        this.cascoVida = this.physics.add.sprite(38, 30, 'vida');
+        this.cascoVida.anims.play('v');
+        this.cascoVida.setScale(2);
     }
     update() {
         //desplazamiento del fondo
