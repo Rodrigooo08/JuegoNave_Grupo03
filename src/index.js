@@ -5,6 +5,7 @@ import GameOver from "./scenes/GameOver.js";
 import MenuStart from "./scenes/MenuStart.js"; 
 import Escena3 from "./scenes/Escena3.js";
 import Escena4 from "./scenes/Escena4.js";
+import Ajustes from "./scenes/Ajustes.js";
 // Función para cargar el CSS
 function loadCSS(file) {
     const link = document.createElement('link');
@@ -21,7 +22,7 @@ const config={
     width: 800,
     height: 600,
     parent:'game-container',
-    scene: [MenuStart,Escena1, Escena2, EscenaBonus, Escena3, Escena4, GameOver],
+    scene: [MenuStart, Escena1, Escena2, EscenaBonus, Escena3, Escena4, GameOver, Ajustes],
     physics:{
         default: 'arcade',
         arcade:{

@@ -43,19 +43,30 @@ class MenuStart extends Phaser.Scene {
             
         }).setOrigin(0.5).setInteractive();  
 
-        const exitButton = this.add.text(400, 350, 'Salir', {  
+        const configButton = this.add.text(400, 350, 'Ajustes', {  
+            fontSize: '42px',  
+            fill: "#ffffff",
+            fontFamily:"Times New Roman"
+            
+        }).setOrigin(0.5).setInteractive();  
+
+        const exitButton = this.add.text(400, 450, 'Salir', {  
             fontSize: '42px',  
             fill: '#ffffff',  
             fontFamily:"times new roman"
         }).setOrigin(0.5).setInteractive();  
 
         // Eventos para los botones  
-        playButton.on('pointerdown', () => this.startGame());  
+        playButton.on('pointerdown', () => this.startGame());
+        configButton.on('pointerdown', () => this.configGame());  
         exitButton.on('pointerdown', () => this.exitGame());  
 
         // Cambiar color al pasar el mouse  
         playButton.on('pointerover', () => playButton.setStyle({ fill: '#ff0',fontSize :'50px',backgroundColor:'#68d7c9' }));  
         playButton.on('pointerout', () => playButton.setStyle({ fill: '#ffffff',fontSize :'42px' }));  
+       
+        configButton.on('pointerover', () => configButton.setStyle({ fill: '#ff0',fontSize :'50px',backgroundColor:'#68d7c9' }));  
+        configButton.on('pointerout', () => configButton.setStyle({ fill: '#ffffff',fontSize :'42px' }));  
         
         exitButton.on('pointerover', () => exitButton.setStyle({ fill: '#ff0', fontSize :'50px',backgroundColor:'#68d7c9' }));  
         exitButton.on('pointerout', () => exitButton.setStyle({ fill: '#ffffff', fontSize :'42px' }));  
@@ -66,6 +77,13 @@ class MenuStart extends Phaser.Scene {
       if(this.musicaMenu != null){
         this.musicaMenu.stop();}
         this.scene.start('Escena1'); // Cambia a la escena 1  
+    }  
+
+    configGame() {  
+        console.log("Configurando el juego...");
+      if(this.musicaMenu != null){
+        this.musicaMenu.stop();}
+        this.scene.start('Ajustes'); // Cambia a la escena de ajustes  
     }  
 
     exitGame() {  
