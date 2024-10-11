@@ -5,7 +5,7 @@ class Victoria extends Phaser.Scene {
 
     preload() {
         this.load.image('Victoria', 'public/resource/image/Victoria.png');
-        this.load.audio('Final', 'public/resource/sound/Final.mp3');
+        this.load.audio('Final', 'public/resource/sound/FinalGame.mp3');
     }
 
     init(data) {
@@ -14,7 +14,7 @@ class Victoria extends Phaser.Scene {
 
     create() {
         this.Final = this.sound.add('Final');
-        const soundConfig = { volume: 1, loop: true };
+        const soundConfig = { volume: 1, loop: false };
         if (!this.sound.locked) {
             this.Final.play(soundConfig);
         }
