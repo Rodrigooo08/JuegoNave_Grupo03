@@ -26,6 +26,9 @@ class Escena3 extends Phaser.Scene{
                 bala.body.reset(this.jugador.x,this.jugador.y);
                 bala.body.enable=true;
                 bala.setVelocityY(-400);
+                const sonidoDisparo = this.sound.add('disparoFx'); 
+                sonidoDisparo.play(); 
+
             }
             this.balasRecolectadas--;
             this.textoBalas.setText('Balas: '+this.balasRecolectadas);
@@ -40,6 +43,7 @@ class Escena3 extends Phaser.Scene{
         this.load.spritesheet('nave','public/resource/image/nave.png', {frameWidth:75,frameHeight:80}),
         this.load.image('meteoro3','public/resource/image/Basurita_espacial2.png')
         this.load.image('meteoro4','public/resource/image/Basurita_espacial.png')
+        this.load.audio('disparoFx','public/resource/sound/LaserSound.mp3')
         this.load.image('meteoro5','public/resource/image/Basurita_espacial3.png')
     }
     create(){

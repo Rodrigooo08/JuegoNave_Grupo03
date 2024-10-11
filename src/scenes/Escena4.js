@@ -16,6 +16,8 @@ class Escena4 extends Phaser.Scene {
             bala.body.reset(this.jugador.x, this.jugador.y);
             bala.body.enable = true;
             bala.setVelocityX(400);
+            const sonidoDisparo = this.sound.add('disparoFx'); 
+            sonidoDisparo.play(); 
         }
     }
     generarMeteoros() {
@@ -109,7 +111,7 @@ class Escena4 extends Phaser.Scene {
         this.load.audio('audioEscena4','public/resource/sound/Boss_theme.mp3');
         this.load.spritesheet('enemigo','public/resource/image/Sprite enemigo.png', {frameWidth:46.5,frameHeight:41}),
         this.load.spritesheet('proyectil','public/resource/image/spritesheet_bala.png',{frameWidth:39.4,frameHeight:28});
-
+        this.load.audio('disparoFx','public/resource/sound/LaserSound.mp3')
     }
     create() {
         //this.add.image(400,300,'cielo').setDisplaySize(this.scale.width, this.scale.height);
