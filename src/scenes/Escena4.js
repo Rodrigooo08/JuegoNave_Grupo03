@@ -124,6 +124,7 @@ class Escena4 extends Phaser.Scene {
         }
         //jugador
         this.jugador = this.physics.add.sprite(10, 300, 'naveVer');
+        this.jugador.angle = 90;
         this.jugador.setCollideWorldBounds(true);
         // Enemigo
         this.anims.create({
@@ -161,7 +162,7 @@ class Escena4 extends Phaser.Scene {
 
         // Jefe Final
         //Vidas Jefe
-        this.vidaJefe =50;
+        this.vidaJefe =5;
         this.anims.create({
             key: 'jefeAnimado',
             frames: this.anims.generateFrameNumbers('jefeFinal', { start: 1, end: 46 }), // Cambia el rango según la cantidad de fotogramas que tenga tu GIF
