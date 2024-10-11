@@ -162,7 +162,7 @@ class Escena4 extends Phaser.Scene {
 
         // Jefe Final
         //Vidas Jefe
-        this.vidaJefe =5;
+        this.vidaJefe =50;
         this.anims.create({
             key: 'jefeAnimado',
             frames: this.anims.generateFrameNumbers('jefeFinal', { start: 1, end: 46 }), // Cambia el rango según la cantidad de fotogramas que tenga tu GIF
@@ -184,7 +184,7 @@ class Escena4 extends Phaser.Scene {
         this.physics.add.overlap(this.balas, this.jefeFinal, this.reducirVidaJefe,null, this);
         this.physics.add.overlap(this.balas, this.grupoEnemigos, this.destruirEnemigo,null,this);
         //vidas
-        this.vidasRestantes = 100;
+        this.vidasRestantes = 5;
         this.textoVidas = this.add.text(39, 20, ': ' + this.vidasRestantes, { fontSize: '32px', fill: '#F5EFFF' });
         //collider
         this.physics.add.collider(this.jugador, this.grupoMeteoros, this.reducirVida, null, this);
